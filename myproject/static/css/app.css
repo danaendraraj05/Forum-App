@@ -1,0 +1,35 @@
+body {
+    background-color: #000000;
+  }
+  .table {
+    background-color: #ffffff;
+    border-radius: 10px;
+  }
+  .table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  .table th, .table td {
+    vertical-align: middle;
+  }
+  .table th {
+    background-color: #032330;
+    color: white;
+  }
+  .navbar {
+    background-color: black;
+  }
+  .navbar a {
+    color: #ffffff;
+  }
+  .card-header {
+    background-color: white;
+    color: #032330;
+  }
+  .breadcrumbs{
+    background-color: #000000;
+    color:white;
+  }
+  .form-group
+  {
+    color: #ffffff;
+  }
