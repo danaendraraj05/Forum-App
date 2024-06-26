@@ -7,6 +7,16 @@ class Board(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def posts_count(self):
+        return Post.objects.filter(topic__board=self).count()
+
+    def topics_count(self):
+        return self.topics.count()
+
+    def last_post_date(self):
+        last_post = Post.objects.filter(topic__board=self).order_by('-created_at').first()
+        return last_post.created_at if last_post else None
 
 class Topic(models.Model):
     board = models.ForeignKey(Board, related_name='topics', on_delete=models.CASCADE)

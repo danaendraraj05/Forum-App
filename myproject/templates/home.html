@@ -62,7 +62,7 @@
               {% for board in boards %}
                 <tr>
                   <td>
-                    <h6>{{board.name}}</h6>
+                    <h6><a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a></h6>
                     <small class="text-muted d-block">{{ board.description }}</small>
                   </td>
                   <td class="align-middle">{{ board.posts_count }}</td>
