@@ -32,9 +32,10 @@ body {
   }
   .form-group
   {
-    color: #ffffff;
+    color: #8d8888;
   }
   .pacifico-regular {
+    color:#ffffff;
     font-family: "Pacifico", cursive;
     font-weight: 400;
     font-style: normal;

@@ -1,4 +1,6 @@
+{% extends 'base.html' %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -8,54 +10,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <style>
-      body {
-        background-color: #000000;
-      }
-      .table {
-        background-color: #ffffff;
-      }
-      .table-hover tbody tr:hover {
-        background-color: #f1f1f1;
-      }
-      .table th, .table td {
-        vertical-align: middle;
-      }
-      .table th {
-        background-color: #032330;
-        color: white;
-      }
-      .navbar{
-        background-color:black;
-      }
-      .navbar a{
-        color:#ffffff;
-      }
-      .navbar a:hover
-      {
-        text-decoration:none;
-      }
-      .card-header{
-        background-color:white;
-        color:#032330;
-      }
-      .pacifico-regular {
-        font-family: "Pacifico", cursive;
-        font-weight: 400;
-        font-style: normal;
-        font-size:30px;
-      }
-    </style>
   </head>
   <body>
-    <nav class="navbar">
-      <b><a class="pacifico-regular" href="/">Forum App</a></b>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-      </div>
-    </nav>
+    {% block breadcrumb %}
+        <li class="breadcrumb-item">Welcome to the discussion board </li>
+    {% endblock %}
+
+{%block content%}    
     <div class="container mt-4">
       <div class="card">
         <div class="card-header">
@@ -88,5 +49,6 @@
         </div>
       </div>
     </div>
+    {%endblock%}
   </body>
 </html>
