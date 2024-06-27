@@ -20,6 +20,7 @@ body {
   }
   .navbar a {
     color: #ffffff;
+    text-decoration: none;
   }
   .card-header {
     background-color: white;
@@ -33,3 +34,10 @@ body {
   {
     color: #ffffff;
   }
+  .pacifico-regular {
+    font-family: "Pacifico", cursive;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 30px;
+  }
+  
