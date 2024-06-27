@@ -1,0 +1,15 @@
+.navbar-custom {
+    color: white; /* Set text color */
+}
+
+.navbar-custom .navbar-toggler-icon {
+    color: white; /* Set color for the navbar toggler icon */
+}
+
+.nav-item dropdown
+{
+    background-color: aliceblue;
+}
+.navbar-brand pacifico-regular a{
+    color:aliceblue;
+}
