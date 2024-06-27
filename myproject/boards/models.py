@@ -21,6 +21,7 @@ class Board(models.Model):
 class Topic(models.Model):
     board = models.ForeignKey(Board, related_name='topics', on_delete=models.CASCADE)
     subject = models.CharField(max_length=255)
+    views = models.IntegerField(default=0)
     last_updated = models.DateTimeField(auto_now_add=True)
     starter = models.ForeignKey('auth.User', related_name='topics', on_delete=models.CASCADE)
 
