@@ -16,7 +16,7 @@
         <li class="breadcrumb-item">Welcome to the discussion board </li>
     {% endblock %}
 
-{%block content%}    
+    {% block content %}
     <div class="container mt-4">
       <div class="card">
         <div class="card-header">
@@ -47,8 +47,33 @@
             </tbody>
           </table>
         </div>
+        <nav aria-label="Boards pagination">
+          <ul class="pagination justify-content-center">
+            {% if boards.has_previous %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ boards.previous_page_number }}">Previous</a>
+              </li>
+            {% endif %}
+            {% for num in boards.paginator.page_range %}
+              {% if boards.number == num %}
+                <li class="page-item active" aria-current="page">
+                  <span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
+                </li>
+              {% else %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+            {% if boards.has_next %}
+              <li class="page-item">
+                <a class="page-link" href="?page={{ boards.next_page_number }}">Next</a>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
       </div>
     </div>
-    {%endblock%}
+    {% endblock %}
   </body>
 </html>

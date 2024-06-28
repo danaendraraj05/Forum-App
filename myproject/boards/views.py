@@ -44,21 +44,37 @@ def reply_topic(request, pk, topic_pk):
 def topic_posts(request, pk, topic_pk):
     topic = get_object_or_404(Topic, board__pk=pk, pk=topic_pk)
     Topic.objects.filter(pk=topic.pk).update(views=F('views') + 1)
-    #topic.save()
-    return render(request, 'topic_posts.html', {'topic': topic})
+
+    # Retrieve all posts for the topic ordered by created_at
+    posts = topic.posts.order_by('created_at')
+
+    # Pagination setup
+    paginator = Paginator(posts, 2)  # Adjust as per your preference
+    page = request.GET.get('page')
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    return render(request, 'topic_posts.html', {'topic': topic, 'posts': posts})
 
 def home(request):
-    boards = Board.objects.all()
-    for board in boards:
-        board.posts_count = board.posts_count()
-        board.topics_count = board.topics_count()
-        board.last_post_date = board.last_post_date()
+    boards_list = Board.objects.order_by('name')   
+    paginator = Paginator(boards_list, 2)
+    page = request.GET.get('page')
+    try:
+        boards = paginator.page(page)
+    except PageNotAnInteger:
+        boards = paginator.page(1)
+    except EmptyPage:
+        boards = paginator.page(paginator.num_pages)   
     return render(request, 'home.html', {'boards': boards})
 
 def board_topics(request, pk):
     board = get_object_or_404(Board, pk=pk)
     queryset = board.topics.order_by('-last_updated').annotate(replies=Count('posts'))
-    print(queryset)  # Debug statement
     page = request.GET.get('page', 1)
     paginator = Paginator(queryset, 5)
     
@@ -91,3 +107,19 @@ def new_topic(request, pk):
     else:
         form = NewTopicForm()
     return render(request, 'new_topic.html', {'board': board, 'form': form})
+
+class PostListView(ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'topic_posts.html'
+    paginate_by = 5 
+
+    def get_queryset(self):
+        topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'), pk=self.kwargs.get('topic_pk'))
+        queryset = topic.posts.order_by('created_at')
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        topic = get_object_or_404(Topic, board__pk=self.kwargs.get('pk'), pk=self.kwargs.get('topic_pk'))
+        kwargs['topic'] = topic
+        return super().get_context_data(**kwargs)
