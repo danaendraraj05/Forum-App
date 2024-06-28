@@ -9,6 +9,8 @@ from django.db.models import F
 from django.db.models import Count
 from django.views.generic import UpdateView
 from django.utils import timezone
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.generic import ListView
 
 class PostUpdateView(UpdateView):
     model = Post
@@ -55,7 +57,18 @@ def home(request):
 
 def board_topics(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    topics = board.topics.order_by('-last_updated').annotate(replies=Count('posts') )
+    queryset = board.topics.order_by('-last_updated').annotate(replies=Count('posts'))
+    print(queryset)  # Debug statement
+    page = request.GET.get('page', 1)
+    paginator = Paginator(queryset, 5)
+    
+    try:
+        topics = paginator.page(page)
+    except PageNotAnInteger:
+        topics = paginator.page(1)
+    except EmptyPage:
+        topics = paginator.page(paginator.num_pages)
+    
     return render(request, 'topics.html', {'board': board, 'topics': topics})
 
 @login_required
