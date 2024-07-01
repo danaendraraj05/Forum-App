@@ -6,6 +6,15 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import UpdateView
 from .forms import SignUpForm
+from django.contrib.auth import logout
+
+def custom_logout_view(request):
+    if request.method == 'POST' or request.method == 'GET':
+        logout(request)
+        referer = request.META.get('HTTP_REFERER', '/')
+        return redirect(referer)
+    else:
+        return redirect('/')
 
 @method_decorator(login_required, name='dispatch')
 class UserUpdateView(UpdateView):
