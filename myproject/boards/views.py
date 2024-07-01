@@ -62,7 +62,7 @@ def topic_posts(request, pk, topic_pk):
 
 def home(request):
     boards_list = Board.objects.order_by('name')   
-    paginator = Paginator(boards_list, 2)
+    paginator = Paginator(boards_list, 3)
     page = request.GET.get('page')
     try:
         boards = paginator.page(page)
